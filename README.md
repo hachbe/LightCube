@@ -1,25 +1,21 @@
-LightCube
-=========
-
-Current version:  0.1.2
+#LightCube
 
 
+Current version:  0.1.2 (prototype)
+
+LightCube is a jQuery Plugin for overlay image and YouTube video above the current page.
+It's in Responsive Design.
 
 
-<div class="lightcube">
-	<div class="lc_background"></div>
-	<div class="lc_header">
-		<a href="#" class="lc_close">Close</a>
-	</div>
-	<div class="lc_loader"></div>
-	<div class="lc_box">
-		<div class="lc_relative">
-			<a href="#" class="lc_close">X</a>
-			<div class="lc_content"></div>
-		</div>
-	</div>
-</div>
+## Credits and license
 
+### Author
+by Bastien Heynderickx (hachbé)  
+[www.hachbe.be](http://www.hachbe.be)  
+[twitter.com/hachbe](http://twitter.com/hachbe)
 
+###License
+Licensed under the [Creative Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/)
 
- <iframe width="420" height="315" src="http://www.youtube.com/embed/Oyh6liAD-g0" frameborder="0" allowfullscreen></iframe>
+* Free for use in both personal and commercial projects.
+* Attribution requires leaving author name, author homepage link, and the license info intact.
