@@ -1,0 +1,145 @@
+@charset "UTF-8";
+
+/* ---------------------------------------------------------------------------------------------------- */
+/* CSS pour XXXXXXX par Bastien Heynderickx (hachbé) version 1.0 | 20131031								*/
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* ------------------------------------------------- */
+/* LIGHTCUBE										 */	
+/* ------------------------------------------------- */	
+	
+	.lightcube {
+		
+	}
+	.lightcube .lc_header { display:none; }
+	.lightcube .lc_background{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: #000000;
+		z-index: 98;
+	}
+	.lightcube .lc_loader{
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		width: 60px;
+		height: 60px;
+		border-radius: 30px;
+		background: url('img/lc_loader.gif') #FFF center center no-repeat;;
+		z-index: 99;
+		-webkit-box-shadow:  0px 0px 5px 0px rgba(0, 0, 0, 0.8);
+        box-shadow:  0px 0px 5px 0px rgba(0, 0, 0, 0.8);
+	}
+	.lightcube .lc_box {
+		position: absolute;
+		background: #FFFFFF;
+		padding: 5px;
+		z-index: 99;
+		
+	}
+	.lightcube .lc_relative {
+		
+		position: relative;
+		padding-bottom: 56.25%; /* 16:9 */
+		height: 0;
+	}
+	.lightcube h2 { 
+		display:block;
+		font-size: 20px;
+		padding: 0 25px 0 0;
+	}
+	.lightcube .lc_relative .lc_close {
+		position:absolute;
+		right: 0px;
+		top: 0px;
+		background: url("img/bt_close_menu_tablet.png") #000 left top no-repeat;
+		color: #FFF;
+		width: 20px;
+		height: 20px;
+		overflow: hidden;
+		text-indent: -999999px;
+		display: block;
+		text-align: center;
+		line-height: 20px;
+
+		
+	}
+	.lightcube .lc_relative .lc_close:hover {
+			background: url("img/bt_close_menu_tablet.png") #000 left bottom no-repeat;
+	}
+	
+	.lightcube .lc_relative iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
+	/* Responsive */
+	.lightcube.responsive .lc_header { 
+		display:block; 
+		background: #003E7E;
+		color: #FFF;
+		position:fixed ;
+		top:0px;
+		left:0px;
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		z-index:100;
+	}
+	.lightcube.responsive .lc_header a.lc_close_mobile { 
+		color:#003E7E; 
+		padding: 5px 10px;
+		background: #fff;
+		border-radius: 3px;
+		margin: 0 0 0 10px;
+		text-decoration:none;
+	}
+	.lightcube.responsive h2 {
+		font-size: 24px;
+		font-weight: 700;
+		padding: 10px 0;
+		border-bottom: 1px solid #eeeeee;
+		margin-bottom:10px;
+	}
+	.lightcube.responsive .lc_background{
+		opacity: 1;
+		background: #FFF;
+	}
+	.lightcube.responsive {
+		background: #FFF;
+	}
+	.lightcube.responsive .lc_box {
+		padding: 10px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		width: 100%;
+	}
+	.lightcube.responsive .lc_relative .lc_close {
+		display:none;
+	}
+	
+	@media screen and (max-width:1200px) and (min-width:960px) {
+		/*.wrapper
+			{
+				-webkit-box-sizing: border-box;
+			    -moz-box-sizing: border-box;
+			    box-sizing: border-box;
+			    width: 100%;
+			}
+		*/
+	}
+	@media screen and (max-width:960px) and (min-width:767px) {
+		
+	}
+	@media handheld, only screen and (max-width: 767px) {
+	
+	}
+
+/* THIS IS THE END */
