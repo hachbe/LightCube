@@ -141,6 +141,9 @@
 			
 			$(".lightcube").fadeOut(500,function(){
 				$(".lightcube").remove();
+				if($("html").hasClass("lc_overlay")){
+					$("html").removeClass("lc_overlay");
+				}
 			});
 			$(window).unbind('keydown');
 			$(window).unbind('resize');
@@ -263,13 +266,16 @@
 		
 		function resizeElem(){
 			
-			position();
+			
+			
+			
 			
 			// On check si la box et plus petit que l'écran.
 			boxWidth = $(".lc_box").outerWidth();
 			
 			var windowWidthSize = windowWidth();
 			var windowHeightSize = windowHeight();
+			
 			/*
 			 * MOBILE 
 			 */
@@ -293,7 +299,13 @@
 			 	$(".lc_box").outerWidth(windowWidthSize).height(windowWidthSize * $(".lc_box").data('aspectRatio'));
 			 	$(".lc_box img").css("width","100%");
 				
-				
+				$("html").addClass("lc_overlay");
+				$(".lc_box").css({
+					"width"			: "100%",
+					"height"		: "100%",
+					"top"			: "0px",
+					"padding-top" 	: "50px"
+				});
 			/*
 			 * DESKTOP/TABLETTE
 			 */	
@@ -325,16 +337,16 @@
 				} 
 			}
 			
-			
+			position();
 			
 		} // eof function "resizeElem"
 		
 		
 		function position(){
-			// Positionnement du Lightcube
-			$(".lc_box").css("left",(scrollX()+(windowWidth()-widthElem))/2+"px");
-			$(".lc_box").css("top",(scrollY()+(windowHeight()-heightElem)/2)+"px");
-				
+			if(($(".lightcube").hasClass('responsive'))==false){
+				$(".lc_box").css("left",(scrollX()+(windowWidth()-widthElem))/2+"px");
+				$(".lc_box").css("top",(scrollY()+(windowHeight()-heightElem)/2)+"px");
+			}
 		} // eof function "position"
 		
 		// NO USE 

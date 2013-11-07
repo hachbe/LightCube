@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* ---------------------------------------------------------------------------------------------------- */
-/* CSS pour XXXXXXX par Bastien Heynderickx (hachbé) version 1.0 | 20131031								*/
+/* CSS pour LightCube par Bastien Heynderickx (hachbé) version 1.0 | 20131106							*/
 /* ---------------------------------------------------------------------------------------------------- */
 
 /* ------------------------------------------------- */
@@ -79,7 +79,24 @@
 		height: 100%;
 	}
 	
-	/* Responsive */
+	/* ------------------------------------------------ */
+	/* Responsive 										*/
+	/* ------------------------------------------------ */
+	html.lc_overlay {
+		overflow: hidden;
+	}
+	.lightcube.responsive {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		right: 0px;
+		bottom:0px;
+		height: 100%;
+		z-index:101;
+		overflow:scroll;
+		
+	}
+	
 	.lightcube.responsive .lc_header { 
 		display:block; 
 		background: #003E7E;
@@ -120,6 +137,8 @@
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 		width: 100%;
+		height:100%;
+		overflow:scroll;
 	}
 	.lightcube.responsive .lc_relative .lc_close {
 		display:none;

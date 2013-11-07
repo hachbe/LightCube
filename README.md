@@ -1,5 +1,6 @@
-#LightCube
+#LightCube (prototype)
 
+### !Work in progress!
 
 Current version:  0.1.2 (prototype)
 
