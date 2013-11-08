@@ -1,6 +1,6 @@
 /*!
  * LightCube - jQuery Plugin
- * version: 0.1.2 (05 Nov 2013)
+ * version: 0.1.2 (08 Nov 2013)
  * requires jQuery v1.6 or later
  *
  *
@@ -28,8 +28,9 @@
 			"videoHeight"			: 315, // Default Width (rapport 16:9)
 			"mobileBreakingPoint" 	: 767, //Largeur à partir de laquelle tout affichage inférieur passe en mode Responsive
 			"backgroundResponsive"	: '#FFFFFF', // Format -> Hexadecimal
-			"labelClose"			: 'fermer',
-			"autoplay"				: true, //Autoplay vidéo? True or False
+			"labelClose"			: 'close', // Label show in the Mobile Device
+			"autoplay"				: false, //Autoplay vidéo? True or False
+			"class"					: 'lightcube',
 			"keys"  				: {
 		                                "next" : {
 		                                        13 : 'left', // enter
@@ -52,33 +53,34 @@
     	// On fusionne les options envoyés par l'utilisateur avec ceux par défaut.
     	var opt=$.extend(defauts, options); 
     	
-    	var link; // Shortcut for the link
-    	var type = "image";  // Content type
-    	var img;
-    	var timer;
-    	var title;
-    	var element;
-    	var boxWidth;
-    	var newWidth;
-    	var widthElem;
-    	var heightElem;
-    	var headerHeight;
+    	var link			= null; 	// Shortcut for the link
+    	var type 			= "image";  // Content type
+    	var img 			= null;
+    	var timer 			= null;
+    	var title 			= null;
+    	var element 		= null;
+    	var idVideo 		= null;
+    	var boxWidth 		= null;
+    	var newWidth 		= null;
+    	var widthElem 		= null;
+    	var heightElem 		= null;
+    	var headerHeight 	= null;
     	
  
     	
     	// Regular expressions needed for the content (Based of ZoomBox plugin jQuery of Grafikart)
 		var filtreImg			=        /(\.jpg)|(\.jpeg)|(\.bmp)|(\.gif)|(\.png)/i;
-		var filtreMP3			=        /(\.mp3)/i;
-		var filtreFLV			=        /(\.flv)/i;
-		var filtreSWF			=        /(\.swf)/i;
-		var filtreQuicktime		=        /(\.mov)|(\.mp4)/i;
-		var filtreWMV			=        /(\.wmv)|(\.avi)/i;
-		var filtreDailymotion	=        /(http:\/\/www.dailymotion)|(http:\/\/dailymotion)/i;
-		var filtreVimeo			=        /(http:\/\/www.vimeo)|(http:\/\/vimeo)/i;
+		//var filtreMP3			=        /(\.mp3)/i;
+		//var filtreFLV			=        /(\.flv)/i;
+		//var filtreSWF			=        /(\.swf)/i;
+		//var filtreQuicktime		=        /(\.mov)|(\.mp4)/i;
+		//var filtreWMV			=        /(\.wmv)|(\.avi)/i;
+		//var filtreDailymotion	=        /(http:\/\/www.dailymotion)|(http:\/\/dailymotion)/i;
+		//var filtreVimeo			=        /(http:\/\/www.vimeo)|(http:\/\/vimeo)/i;
 		var filtreYoutube		=        /(youtube\.)/i;
-		var filtreKoreus		=        /(http:\/\/www\.koreus)|(http:\/\/koreus)/i;
+		//var filtreKoreus		=        /(http:\/\/www\.koreus)|(http:\/\/koreus)/i;
     	
-    	$("a[rel='lightcube']").click(function(){
+    	$("a."+opt.class).click(function(){
     		element = $(this);
     		link 	= element.attr("href");
     		title 	= element.attr("title");
@@ -97,26 +99,24 @@
 		});
 		
 		
-			
-		
-		
+
 		function shortcut(key){
-			if(key == 37){
+			/*if(key == 37){
 		        prev();
 		    }
 		    if(key == 39){
 		        next();
-		    }
+		    }*/
 		    if(key == opt.keys.close){
 		        close();
 		    }
-		}
+		} // eof function "shortcut"
 		
 		
 		function open(){
 			
 			
-			$("body").append('<div class="lightcube"><div class="lc_header"><a href="#" class="lc_close_mobile">'+opt.labelClose+'</a></div><div class="lc_background"></div><div class="lc_loader"></div><div class="lc_box"><div class="lc_relative"><a href="#" class="lc_close">X</a><div class="lc_content"></div></div></div></div>');
+			$("body").append('<div class="lc_lightcube"><div class="lc_header"><a href="#" class="lc_close_mobile">'+opt.labelClose+'</a></div><div class="lc_background"></div><div class="lc_loader"></div><div class="lc_box"><div class="lc_relative"><a href="#" class="lc_close">X</a><div class="lc_content"></div></div></div></div>');
 			$(".lc_box").hide();
 			$(".lc_loader").hide().fadeIn();
 			$(".lc_background").hide().fadeTo(500,opt.opacity).css({'background-color': opt.backgroundColor});
@@ -139,8 +139,8 @@
 		
 		function close(){
 			
-			$(".lightcube").fadeOut(500,function(){
-				$(".lightcube").remove();
+			$(".lc_lightcube").fadeOut(500,function(){
+				$(".lc_lightcube").remove();
 				if($("html").hasClass("lc_overlay")){
 					$("html").removeClass("lc_overlay");
 				}
@@ -185,17 +185,17 @@
 				widthElem 	= opt.videoWidth;
 				heightElem	= opt.videoHeight;
 				
-				var id=link.split('watch?v=');
-		        id=id[1].split('&');
-		        id=id[0]+'?';
+				idVideo=link.split('watch?v=');
+		        idVideo=idVideo[1].split('&');
+		        idVideo=idVideo[0]+'?';
 		        if(opt.autoplay==true){
-		            id = id + 'autoplay=1&';
+		            idVideo = idVideo + 'autoplay=1&';
 		        }
 				
 				if(title){
-					$(".lc_content").append('<h2>'+title+'</h2><iframe src="http://www.youtube.com/embed/'+id+'wmode=Opaque" width="'+widthElem+'px" height="'+heightElem+'px" frameborder="0" allowfullscreen></iframe>');
+					$(".lc_content").append('<h2>'+title+'</h2><iframe src="http://www.youtube.com/embed/'+idVideo+'wmode=Opaque" width="'+widthElem+'px" height="'+heightElem+'px" frameborder="0" allowfullscreen></iframe>');
 				} else {
-					$(".lc_content").append('<h2>&nbsp;</h2><iframe src="http://www.youtube.com/embed/'+id+'wmode=Opaque" width="'+widthElem+'px" height="'+heightElem+'px" frameborder="0" allowfullscreen></iframe>');
+					$(".lc_content").append('<h2>&nbsp;</h2><iframe src="http://www.youtube.com/embed/'+idVideo+'wmode=Opaque" width="'+widthElem+'px" height="'+heightElem+'px" frameborder="0" allowfullscreen></iframe>');
 				}
 				$(".lc_content iframe").data('aspectRatio', heightElem / widthElem)
 					// and remove the hard coded width/height
@@ -205,6 +205,7 @@
 				
 				var titleHeight = $(".lc_content h2").height();
 				$(".lc_content iframe").css({'top': titleHeight+'px'});
+				
 			
 			}
 			
@@ -281,9 +282,9 @@
 			 */
 			if(windowWidthSize<=opt.mobileBreakingPoint){ // Si la taille de l'écran est plus petit ou équalle au Breaking Point prévus dans les options'
 			
-				if($(".lightcube").hasClass('responsive')==false){
-					$(".lightcube").addClass('responsive');
-					$(".lightcube .lc_background").css({
+				if($(".lc_lightcube").hasClass('responsive')==false){
+					$(".lc_lightcube").addClass('responsive');
+					$(".lc_lightcube .lc_background").css({
 						opacity: 1,
 						'background-color': opt.backgroundResponsive
 					});
@@ -310,9 +311,9 @@
 			 * DESKTOP/TABLETTE
 			 */	
 			} else if(windowWidthSize>opt.mobileBreakingPoint) { // Si la taille de l'écran est plus grand au Breaking Point prévus dans les options'
-				if($(".lightcube").hasClass('responsive')){
-					$(".lightcube").removeClass('responsive');
-					$(".lightcube .lc_background").css({
+				if($(".lc_lightcube").hasClass('responsive')){
+					$(".lc_lightcube").removeClass('responsive');
+					$(".lc_lightcube .lc_background").css({
 						opacity: opt.opacity ,
 						'background-color': opt.backgroundColor
 					});
@@ -343,7 +344,7 @@
 		
 		
 		function position(){
-			if(($(".lightcube").hasClass('responsive'))==false){
+			if(($(".lc_lightcube").hasClass('responsive'))==false){
 				$(".lc_box").css("left",(scrollX()+(windowWidth()-widthElem))/2+"px");
 				$(".lc_box").css("top",(scrollY()+(windowHeight()-heightElem)/2)+"px");
 			}
