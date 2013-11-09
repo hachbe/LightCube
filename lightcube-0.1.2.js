@@ -30,7 +30,7 @@
 			"backgroundResponsive"	: '#FFFFFF', // Format -> Hexadecimal
 			"labelClose"			: 'close', // Label show in the Mobile Device
 			"autoplay"				: false, //Autoplay vidéo? True or False
-			"class"					: 'lightcube',
+			"classItem"					: 'lightcube',
 			"keys"  				: {
 		                                "next" : {
 		                                        13 : 'left', // enter
@@ -66,6 +66,9 @@
     	var heightElem 		= null;
     	var headerHeight 	= null;
     	
+    	var loaderWidth		= null; // lc_loader + width
+    	var loaderHeight	= null; // lc_loader + height
+    	
  
     	
     	// Regular expressions needed for the content (Based of ZoomBox plugin jQuery of Grafikart)
@@ -80,7 +83,7 @@
 		var filtreYoutube		=        /(youtube\.)/i;
 		//var filtreKoreus		=        /(http:\/\/www\.koreus)|(http:\/\/koreus)/i;
     	
-    	$("a."+opt.class).click(function(){
+    	$("a."+opt.classItem).click(function(){
     		element = $(this);
     		link 	= element.attr("href");
     		title 	= element.attr("title");
@@ -93,7 +96,7 @@
 			$(window).keydown(function(event){
 				shortcut(event.which);
 	    	});
-			$(window).resize(resizeElem); //On lance la fonction resize si on resize la fenêtre.
+			$(window).resize(resizeElem);
 			$(window).scroll(position);
 			return false;
 		});
@@ -117,6 +120,10 @@
 			
 			
 			$("body").append('<div class="lc_lightcube"><div class="lc_header"><a href="#" class="lc_close_mobile">'+opt.labelClose+'</a></div><div class="lc_background"></div><div class="lc_loader"></div><div class="lc_box"><div class="lc_relative"><a href="#" class="lc_close">X</a><div class="lc_content"></div></div></div></div>');
+			loaderWidth = $(".lc_loader").width();
+			loaderHeight = $(".lc_loader").height();
+			$(".lc_loader").css("left",(scrollX()+(windowWidth()-loaderWidth))/2+"px"); 
+			$(".lc_loader").css("top",(scrollY()+(windowHeight()-loaderHeight)/2)+"px");
 			$(".lc_box").hide();
 			$(".lc_loader").hide().fadeIn();
 			$(".lc_background").hide().fadeTo(500,opt.opacity).css({'background-color': opt.backgroundColor});
@@ -266,10 +273,6 @@
 		
 		
 		function resizeElem(){
-			
-			
-			
-			
 			
 			// On check si la box et plus petit que l'écran.
 			boxWidth = $(".lc_box").outerWidth();

@@ -23,8 +23,6 @@
 	}
 	.lc_lightcube .lc_loader{
 		position: fixed;
-		top: 50%;
-		left: 50%;
 		width: 60px;
 		height: 60px;
 		border-radius: 30px;
