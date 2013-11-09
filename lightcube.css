@@ -22,7 +22,7 @@
 		z-index: 98;
 	}
 	.lc_lightcube .lc_loader{
-		position: fixed;
+		position: absolute;
 		width: 60px;
 		height: 60px;
 		border-radius: 30px;

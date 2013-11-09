@@ -30,7 +30,7 @@
 			"backgroundResponsive"	: '#FFFFFF', // Format -> Hexadecimal
 			"labelClose"			: 'close', // Label show in the Mobile Device
 			"autoplay"				: false, //Autoplay vidéo? True or False
-			"classItem"					: 'lightcube',
+			"classItem"				: 'lightcube',
 			"keys"  				: {
 		                                "next" : {
 		                                        13 : 'left', // enter
