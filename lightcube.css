@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* ---------------------------------------------------------------------------------------------------- */
-/* CSS pour LightCube par Bastien Heynderickx (hachbé) version 1.0 | 20131106							*/
+/* CSS pour LightCube par Bastien Heynderickx (hachbé) version 1.0 | 20131111							*/
 /* ---------------------------------------------------------------------------------------------------- */
 
 /* ------------------------------------------------- */
@@ -23,31 +23,37 @@
 	}
 	.lc_lightcube .lc_loader{
 		position: absolute;
-		width: 60px;
-		height: 60px;
-		border-radius: 30px;
+		width: 50px;
+		height: 50px;
+		border-radius: 25px 25px 25px 5px;
 		background: url('img/lc_loader.gif') #FFF center center no-repeat;;
 		z-index: 99;
-		-webkit-box-shadow:  0px 0px 5px 0px rgba(0, 0, 0, 0.8);
-        box-shadow:  0px 0px 5px 0px rgba(0, 0, 0, 0.8);
+		-webkit-box-shadow:  0px 0px 5px 1px rgba(0, 0, 0, 0.8);
+        box-shadow:  0px 0px 5px 1px rgba(0, 0, 0, 0.8);
 	}
 	.lc_lightcube .lc_box {
 		position: absolute;
 		background: #FFFFFF;
 		padding: 5px;
 		z-index: 99;
-		
 	}
-	.lc_lightcube .lc_relative {
-		
+	.lc_lightcube .lc_relative { position: relative; }
+	.lc_lightcube .lc_relative.youtube {
 		position: relative;
 		padding-bottom: 56.25%; /* 16:9 */
 		height: 0;
+	}
+	
+	.lc_lightcube .lc_content {
+		clear:both ;
 	}
 	.lc_lightcube h2 { 
 		display:block;
 		font-size: 20px;
 		padding: 0 25px 0 0;
+	}
+	.lc_lightcube .lc_content img {
+		vertical-align:bottom;
 	}
 	.lc_lightcube .lc_relative .lc_close {
 		position:absolute;

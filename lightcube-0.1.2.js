@@ -18,7 +18,7 @@
     	// Default Options.
     	var defauts=
         {
-	    	"opacity"				: 0.7,
+	    	"opacity"				: 0.8,
 	    	"backgroundColor"		: "#000000",
 			"openTime"				: 500, // 1000 = 1 seconde
 			"animation"				: 'likelightbox', // 'zoom', 'likelightbox', 'none'
@@ -38,7 +38,7 @@
 		                                        39 : 'left', // right arrow
 		                                        40 : 'up'    // down arrow
 		                                },
-		                                "plc_closerev" : {
+		                                "prev" : {
 		                                        8  : 'right',  // backspace
 		                                        33 : 'down',   // page up
 		                                        37 : 'right',  // left arrow
@@ -66,9 +66,7 @@
     	var heightElem 		= null;
     	var headerHeight 	= null;
     	
-    	var loaderWidth		= null; // lc_loader + width
-    	var loaderHeight	= null; // lc_loader + height
-    	
+    	var positionStatut	= true;
  
     	
     	// Regular expressions needed for the content (Based of ZoomBox plugin jQuery of Grafikart)
@@ -104,10 +102,10 @@
 		
 
 		function shortcut(key){
-			/*if(key == 37){
+			/*if(key == opt.keys.prev){
 		        prev();
 		    }
-		    if(key == 39){
+		    if(key == opt.keys.next){
 		        next();
 		    }*/
 		    if(key == opt.keys.close){
@@ -120,10 +118,8 @@
 			
 			
 			$("body").append('<div class="lc_lightcube"><div class="lc_header"><a href="#" class="lc_close_mobile">'+opt.labelClose+'</a></div><div class="lc_background"></div><div class="lc_loader"></div><div class="lc_box"><div class="lc_relative"><a href="#" class="lc_close">X</a><div class="lc_content"></div></div></div></div>');
-			loaderWidth = $(".lc_loader").width();
-			loaderHeight = $(".lc_loader").height();
-			$(".lc_loader").css("left",(scrollX()+(windowWidth()-loaderWidth))/2+"px"); 
-			$(".lc_loader").css("top",(scrollY()+(windowHeight()-loaderHeight)/2)+"px");
+			$(".lc_loader").css("left",(scrollX()+(windowWidth()-$(".lc_loader").width() )/2)+"px"); 
+			$(".lc_loader").css("top",(scrollY()+(windowHeight()-$(".lc_loader").height() )/2)+"px");
 			$(".lc_box").hide();
 			$(".lc_loader").hide().fadeIn();
 			$(".lc_background").hide().fadeTo(500,opt.opacity).css({'background-color': opt.backgroundColor});
@@ -174,7 +170,7 @@
 		function buildContent(){
 			
 			$(".lc_box").show();
-			$(".lc_box").css("width",opt.boxWidth+"px").css("height",opt.boxHeight+"px");
+			$(".lc_box").css("width",opt.boxWidth+"px")/*.css("height",opt.boxHeight+"px")*/;
 			
 			
 			if(type=='image'){
@@ -191,6 +187,8 @@
 			} else if(type=='youtube'){
 				widthElem 	= opt.videoWidth;
 				heightElem	= opt.videoHeight;
+				
+				$('.lc_relative').addClass('youtube');
 				
 				idVideo=link.split('watch?v=');
 		        idVideo=idVideo[1].split('&');
@@ -248,7 +246,7 @@
 				},
 					opt.openTime/2,'swing'
 				).animate({
-					height: heightElem
+					height: /*heightElem*/ 'auto'
 				},opt.openTime/2,'swing',
 					function(){
 							$(".lc_content").fadeIn();
@@ -313,7 +311,8 @@
 			/*
 			 * DESKTOP/TABLETTE
 			 */	
-			} else if(windowWidthSize>opt.mobileBreakingPoint) { // Si la taille de l'écran est plus grand au Breaking Point prévus dans les options'
+			} else if(windowWidthSize>opt.mobileBreakingPoint) { // Si la taille de l'écran est plus grand au Breaking Point prévus dans les options
+				
 				if($(".lc_lightcube").hasClass('responsive')){
 					$(".lc_lightcube").removeClass('responsive');
 					$(".lc_lightcube .lc_background").css({
@@ -321,34 +320,43 @@
 						'background-color': opt.backgroundColor
 					});
 				}
-				if(windowWidthSize<= boxWidth){ // Si la taille de l'écran est plus petit que la box
+				if(windowWidthSize<=boxWidth){ // Si la taille de l'écran est plus petit que la box
 					
 					// On se met en mode Responsive  
-				 	$(".lc_box").outerWidth(windowWidthSize).height(windowWidthSize * $(".lc_box").data('aspectRatio'));
-				 	$(".lc_box").css({left:'0px'});
+				 	
+				 	//$(".lc_box").outerWidth(windowWidthSize).height(windowWidthSize * $(".lc_box").data('aspectRatio', boxWidth / boxHeight));
+				 	//$(".lc_box").css({left:'0px'});
+				 	//console.log(windowWidthSize);
+				 	$(".lc_box").outerWidth(windowWidthSize);
 				 	$(".lc_box img").css("width","100%");
+				 	positionStatut = false;
 					
 				} else if ((windowWidthSize>=boxWidth) && (windowWidthSize<=widthElem)){ // Si la taille de l'écran est plus grande que la box et inéfrieur à la taille de l'image
-					$(".lc_box").width(windowWidthSize).height(windowWidthSize * $(".lc_box").data('aspectRatio'));
-				 	$(".lc_box").css("left","0px");
+					//$(".lc_box").width(windowWidthSize).height(windowWidthSize * $(".lc_box").data('aspectRatio'));
+				 	//$(".lc_box").css("left","0px");
+				 	$(".lc_box").outerWidth(windowWidthSize);
+				 	$(".lc_box img").css("width","100%");
+				 	positionStatut = false;
 					// On resize jusqu'à la taille d'origine
-					
-				} else if (windowWidthSize>=widthElem){
-					$(".lc_box").width(widthElem).height(widthElem * $(".lc_box").data('aspectRatio'));
-					// On réactive le positionnement.
-					$(".lc_box").css("left",(scrollX()+(windowWidthSize-widthElem))/2+"px"); 
-					$(".lc_box").css("top",(scrollY()+(windowHeightSize-heightElem)/2)+"px");
+				
+				} else if (windowWidthSize>=widthElem){ // SI la taille de l'écran est plus grande que la taille de l'image.
+						$(".lc_box").width(widthElem).height(widthElem * $(".lc_box").data('aspectRatio'));
+						positionStatut = true; // On réactive le positionnement.
 				} 
 			}
 			
-			position();
+			position(positionStatut);
 			
 		} // eof function "resizeElem"
 		
 		
-		function position(){
-			if(($(".lc_lightcube").hasClass('responsive'))==false){
-				$(".lc_box").css("left",(scrollX()+(windowWidth()-widthElem))/2+"px");
+		function position(positionStatut){
+			//console.log(positionStatut);
+			if( ($(".lc_lightcube").hasClass('responsive'))==false && positionStatut==true ){
+				$(".lc_box").css("left",(scrollX()+(windowWidth()-widthElem)/2)+"px");
+				$(".lc_box").css("top",(scrollY()+(windowHeight()-heightElem)/2)+"px");
+			} else if(positionStatut==false){
+				$(".lc_box").css("left","0px");
 				$(".lc_box").css("top",(scrollY()+(windowHeight()-heightElem)/2)+"px");
 			}
 		} // eof function "position"

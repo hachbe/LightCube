@@ -14,9 +14,3 @@ It's in Responsive Design.
 by Bastien Heynderickx (hachbé)  
 [www.hachbe.be](http://www.hachbe.be)  
 [twitter.com/hachbe](http://twitter.com/hachbe)
-
-###License
-Licensed under the [Creative Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/)
-
-* Free for use in both personal and commercial projects.
-* Attribution requires leaving author name, author homepage link, and the license info intact.
