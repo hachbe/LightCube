@@ -1,8 +1,9 @@
 /*!
  * LightCube - jQuery Plugin
- * version: 0.1.2 (08 Nov 2013)
+ * version: 0.1.2 (15 Nov 2013)
  * requires jQuery v1.6 or later
  *
+ * 2013-11-08 -> JS: 68,5% | CSS: 31,5%
  *
  * Copyright 2013 Bastien Heynderickx (hachbé) - http://www.hachbe.be
  *
@@ -29,7 +30,7 @@
 			"mobileBreakingPoint" 	: 767, //Largeur à partir de laquelle tout affichage inférieur passe en mode Responsive
 			"backgroundResponsive"	: '#FFFFFF', // Format -> Hexadecimal
 			"labelClose"			: 'close', // Label show in the Mobile Device
-			"autoplay"				: false, //Autoplay vidéo? True or False
+			"autoplay"				: true, //Autoplay vidéo? True or False
 			"classItem"				: 'lightcube',
 			"keys"  				: {
 		                                "next" : {
@@ -67,7 +68,6 @@
     	var headerHeight 	= null;
     	
     	var positionStatut	= true;
- 
     	
     	// Regular expressions needed for the content (Based of ZoomBox plugin jQuery of Grafikart)
 		var filtreImg			=        /(\.jpg)|(\.jpeg)|(\.bmp)|(\.gif)|(\.png)/i;
@@ -95,7 +95,9 @@
 				shortcut(event.which);
 	    	});
 			$(window).resize(resizeElem);
-			$(window).scroll(position);
+			$(window).scroll(function(){
+				position();
+			});
 			return false;
 		});
 		
@@ -319,7 +321,9 @@
 						opacity: opt.opacity ,
 						'background-color': opt.backgroundColor
 					});
+					
 				}
+				
 				if(windowWidthSize<=boxWidth){ // Si la taille de l'écran est plus petit que la box
 					
 					// On se met en mode Responsive  
@@ -330,6 +334,7 @@
 				 	$(".lc_box").outerWidth(windowWidthSize);
 				 	$(".lc_box img").css("width","100%");
 				 	positionStatut = false;
+				 	
 					
 				} else if ((windowWidthSize>=boxWidth) && (windowWidthSize<=widthElem)){ // Si la taille de l'écran est plus grande que la box et inéfrieur à la taille de l'image
 					//$(".lc_box").width(windowWidthSize).height(windowWidthSize * $(".lc_box").data('aspectRatio'));
@@ -338,6 +343,7 @@
 				 	$(".lc_box img").css("width","100%");
 				 	positionStatut = false;
 					// On resize jusqu'à la taille d'origine
+					
 				
 				} else if (windowWidthSize>=widthElem){ // SI la taille de l'écran est plus grande que la taille de l'image.
 						$(".lc_box").width(widthElem).height(widthElem * $(".lc_box").data('aspectRatio'));
@@ -347,10 +353,12 @@
 			
 			position(positionStatut);
 			
+			
 		} // eof function "resizeElem"
 		
 		
-		function position(positionStatut){
+		function position(positionStatut=true){
+			
 			//console.log(positionStatut);
 			if( ($(".lc_lightcube").hasClass('responsive'))==false && positionStatut==true ){
 				$(".lc_box").css("left",(scrollX()+(windowWidth()-widthElem)/2)+"px");
@@ -359,14 +367,14 @@
 				$(".lc_box").css("left","0px");
 				$(".lc_box").css("top",(scrollY()+(windowHeight()-heightElem)/2)+"px");
 			}
+				
 		} // eof function "position"
 		
 		// NO USE 
-		function moveToScroll_OLD(){
-				
+		function moveToScroll_NO_USE(){
 				
 				var scrollBox = $(".lc_box");
-				console.log(scrollBox.offset().top);
+				//console.log(boxTopPosition);
 				var parent = scrollBox.parent();
 				var dTop = scrollBox.offset().top; /* positionnement par défaut de l'élément */
 				//var scrollBox = $(this);
