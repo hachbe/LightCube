@@ -32,6 +32,7 @@
 			"labelClose"			: 'close', // Label show in the Mobile Device
 			"autoplay"				: true, //Autoplay vidéo? True or False
 			"classItem"				: 'lightcube',
+			"clickImage"			: true, // True if you will active the click hover the image for close de boxe.
 			"keys"  				: {
 		                                "next" : {
 		                                        13 : 'left', // enter
@@ -134,25 +135,17 @@
 			} else if(type=='youtube'){
 				buildContent();
 			}
-			
-			$(".lc_close_mobile").click(close);
-			$(".lc_close").click(close);
-			$(".lc_background").click(close);
-		
 		} // eof function "open"
 		
 		
 		function close(){
-			
 			$(".lc_lightcube").fadeOut(500,function(){
 				$(".lc_lightcube").remove();
 				if($("html").hasClass("lc_overlay")){
 					$("html").removeClass("lc_overlay");
 				}
 			});
-			$(window).unbind('keydown');
-			$(window).unbind('resize');
-			$(window).unbind('scroll');
+			$(window).unbind();
 			return false;
 			
 		} // eof function "close"
@@ -180,9 +173,18 @@
 			    heightElem 	= img.height;
 			    
 				if(title){
-					$(".lc_content").append('<h2>'+title+'</h2><img src="'+link+'" />');
+					if(opt.clickImage){
+						$(".lc_content").append('<h2>'+title+'</h2><a href="#" class="lc_close_img"><img src="'+link+'" /></a>');
+					} else {
+						$(".lc_content").append('<h2>'+title+'</h2><img src="'+link+'" />');
+					}
 				} else {
-					$(".lc_content").append('<h2>&nbsp;</h2><img src="'+link+'" class="lc_image_without_title" />');
+					if(opt.clickImage){
+						$(".lc_content").append('<h2>&nbsp;</h2><a href="#" class="lc_close_img"><img src="'+link+'" class="lc_image_without_title" /></a>');
+					} else {
+						$(".lc_content").append('<h2>&nbsp;</h2><img src="'+link+'" class="lc_image_without_title" />');
+					}
+					
 				}
 				heightElem = heightElem+$(".lc_content h2").height();
 				
@@ -216,6 +218,10 @@
 			
 			}
 			
+			$(".lc_close_mobile").click(close);
+			$(".lc_close").click(close);
+			if(opt.clickImage) $(".lc_close_img").click(close);
+			$(".lc_background").click(close);
 			
 			animation();
 			
