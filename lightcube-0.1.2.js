@@ -4,6 +4,8 @@
  * requires jQuery v1.6 or later
  *
  * 2013-11-08 -> JS: 68,5% | CSS: 31,5%
+ * 2013-11-19 -> JS: 69,3% (423 lines) | CSS: 3,7% (169 lines)
+ * 2013-11-20 -> 
  *
  * Copyright 2013 Bastien Heynderickx (hachbé) - http://www.hachbe.be
  *
@@ -11,9 +13,9 @@
 
 (function($)
 {
-	
 	$.fn.lightcube=function(options)
     {
+
     	"use strict";
     	
     	// Default Options.
@@ -82,7 +84,9 @@
 		var filtreYoutube		=        /(youtube\.)/i;
 		//var filtreKoreus		=        /(http:\/\/www\.koreus)|(http:\/\/koreus)/i;
     	
-    	$("a."+opt.classItem).click(function(){
+    	
+    	$("a."+opt.classItem).click(function(event){
+    		
     		element = $(this);
     		link 	= element.attr("href");
     		title 	= element.attr("title");
@@ -99,7 +103,7 @@
 			$(window).scroll(function(){
 				position(positionStatut);
 			});
-			return false;
+			event.preventDefault();
 		});
 		
 		
@@ -114,12 +118,10 @@
 		    if(key == opt.keys.close){
 		        close();
 		    }
-		} // eof function "shortcut"
+		} 
 		
 		
 		function open(){
-			
-			
 			$("body").append('<div class="lc_lightcube"><div class="lc_header"><a href="#" class="lc_close_mobile">'+opt.labelClose+'</a></div><div class="lc_background"></div><div class="lc_loader"></div><div class="lc_box"><div class="lc_relative"><a href="#" class="lc_close">X</a><div class="lc_content"></div></div></div></div>');
 			$(".lc_loader").css("left",(scrollX()+(windowWidth()-$(".lc_loader").width() )/2)+"px"); 
 			$(".lc_loader").css("top",(scrollY()+(windowHeight()-$(".lc_loader").height() )/2)+"px");
@@ -127,7 +129,6 @@
 			$(".lc_loader").hide().fadeIn();
 			$(".lc_background").hide().fadeTo(500,opt.opacity).css({'background-color': opt.backgroundColor});
 			
-		
 			if(type=='image'){
 				img 		= new Image();
 				img.src 	= link;
@@ -135,7 +136,7 @@
 			} else if(type=='youtube'){
 				buildContent();
 			}
-		} // eof function "open"
+		} 
 		
 		
 		function close(){
@@ -148,7 +149,7 @@
 			$(window).unbind();
 			return false;
 			
-		} // eof function "close"
+		} 
 		
 		
 		function loadImg(){
@@ -158,7 +159,7 @@
 				buildContent();
 			}
 			
-		} // eof function "loadImg"
+		} 
 		
 		
 		
@@ -224,12 +225,8 @@
 			$(".lc_background").click(close);
 			
 			animation();
-			
-			
-			
-			
-		} // eof function "builContent"
-		
+	
+		} 
 
 		function animation(){
 			
@@ -264,18 +261,8 @@
 					}
 					
 				);
-				
-				
 			}
-			/* NO USE YET */
-			/*
-			else if(opt.animation=='none'){
-				//$(".lc_box").fadeIn(opt.openTime);
-				//$(".lc_content").fadeIn(opt.openTime);
-			}*/
-			
-			
-		} // eof function "animation"
+		} 
 		
 		
 		function resizeElem(){
@@ -310,12 +297,7 @@
 			 	$(".lc_box img").css("width","100%");
 				
 				$("html").addClass("lc_overlay");
-				$(".lc_box").css({
-					"width"			: "100%",
-					"height"		: "100%",
-					"top"			: "0px",
-					"padding-top" 	: "50px"
-				});
+				
 			/*
 			 * DESKTOP/TABLETTE
 			 */	
@@ -327,7 +309,7 @@
 						opacity: opt.opacity ,
 						'background-color': opt.backgroundColor
 					});
-					
+					positionStatut = true;
 				}
 				
 				if(windowWidthSize<=boxWidth){ // Si la taille de l'écran est plus petit que la box
@@ -360,47 +342,19 @@
 			position(positionStatut);
 			
 			
-		} // eof function "resizeElem"
+		} 
 		
-		
-		function position(positionStatut=true){
+		function position(positionStatut){
 			
-			//console.log(positionStatut);
-			if( ($(".lc_lightcube").hasClass('responsive'))==false && positionStatut==true ){
+			if( $(".lc_lightcube").hasClass('responsive')==false && positionStatut==true ){
 				$(".lc_box").css("left",(scrollX()+(windowWidth()-widthElem)/2)+"px");
 				$(".lc_box").css("top",(scrollY()+(windowHeight()-heightElem)/2)+"px");
 			} else if(positionStatut==false){
 				$(".lc_box").css("left","0px");
 				$(".lc_box").css("top",(scrollY()+(windowHeight()-heightElem)/2)+"px");
 			}
-			console.log(positionStatut);
-		} // eof function "position"
-		
-		// NO USE 
-		function moveToScroll_NO_USE(){
-				
-				var scrollBox = $(".lc_box");
-				//console.log(boxTopPosition);
-				var parent = scrollBox.parent();
-				var dTop = scrollBox.offset().top; /* positionnement par défaut de l'élément */
-				//var scrollBox = $(this);
-				//parent.css('position','relative');
-				//scrollBox.css('position','absolute');
-				//console.log(scrollBox.offset().top);
-				$(window).scroll(function(){
-					if(scrollY()>dTop){
-						scrollBox.stop().animate({top:scrollY()-scrollBox.offset().top+50},500);
-					} /*else {
-						scrollBox.stop().animate({top:dTop-parent.offset().top},500);
-					}*/
-				});
-				/*if(scrollY()>dTop){
-					scrollBox.stop().animate({top:scrollY()-parent.offset().top+50},500);
-				}*/ 
-				
-				
-		} // eof function "moveToScroll"
-		
+			
+		}
 		
 		function windowWidth(){
 			
@@ -410,7 +364,7 @@
 				return $(window).width();
 			}
 			
-		} // eof function "windowWidth"
+		} 
 		
 		
 		function windowHeight(){
@@ -421,7 +375,7 @@
 				return $(window).height();
 			}
 			
-		} // eof function "windowHeight"
+		} 
 		
 		
 		function scrollY() { // Return the position of the top
@@ -439,7 +393,7 @@
 		        }
 		        return scrOfY;
 		        
-		} // eof function "scrollY"
+		} 
 		
 		
 		function scrollX(){ // Return the position of the left scroll
@@ -457,7 +411,7 @@
 		        }
 		         return scrOfX;
 		         
-		} // eof function "scrollX"
+		}
 		
 	};
 })(jQuery); // This is the end!

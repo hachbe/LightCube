@@ -48,6 +48,7 @@
 	
 	h1 { margin: 10px 0; font-size: 24px; }
 	
+	a.lightcube > img { width: 24%; }
 
 	
 @media screen and (max-width:1200px) and (min-width:960px) {
