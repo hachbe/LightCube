@@ -97,7 +97,7 @@
 	    	});
 			$(window).resize(resizeElem);
 			$(window).scroll(function(){
-				position();
+				position(positionStatut);
 			});
 			return false;
 		});
@@ -373,7 +373,7 @@
 				$(".lc_box").css("left","0px");
 				$(".lc_box").css("top",(scrollY()+(windowHeight()-heightElem)/2)+"px");
 			}
-				
+			console.log(positionStatut);
 		} // eof function "position"
 		
 		// NO USE 
