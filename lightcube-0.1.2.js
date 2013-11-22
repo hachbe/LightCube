@@ -65,6 +65,7 @@
     	var element 		= null;
     	var idVideo 		= null;
     	var boxWidth 		= null;
+    	var boxHeight 		= null;
     	var newWidth 		= null;
     	var widthElem 		= null;
     	var heightElem 		= null;
@@ -267,8 +268,9 @@
 		
 		function resizeElem(){
 			
-			// On check si la box et plus petit que l'écran.
+			
 			boxWidth = $(".lc_box").outerWidth();
+			boxHeight = $(".lc_box").outerHeight();
 			
 			var windowWidthSize = windowWidth();
 			var windowHeightSize = windowHeight();
@@ -288,7 +290,6 @@
 				
 				// On se met en mode Responsive  
 				headerHeight = $(".lc_header").height();
-			 	
 			 	$(".lc_box").css({
 			 		left:'0px',
 			 		top: headerHeight
@@ -312,11 +313,9 @@
 					positionStatut = true;
 				}
 				
-				if(windowWidthSize<=boxWidth){ // Si la taille de l'écran est plus petit que la box
+				if(windowWidthSize<=boxWidth){ // Si la taille de l'écran est plus petit que la box - WIDTH
 					
-					// On se met en mode Responsive  
-				 	
-				 	//$(".lc_box").outerWidth(windowWidthSize).height(windowWidthSize * $(".lc_box").data('aspectRatio', boxWidth / boxHeight));
+					//$(".lc_box").outerWidth(windowWidthSize).height(windowWidthSize * $(".lc_box").data('aspectRatio', boxWidth / boxHeight));
 				 	//$(".lc_box").css({left:'0px'});
 				 	//console.log(windowWidthSize);
 				 	$(".lc_box").outerWidth(windowWidthSize);
@@ -336,6 +335,15 @@
 				} else if (windowWidthSize>=widthElem){ // SI la taille de l'écran est plus grande que la taille de l'image.
 						$(".lc_box").width(widthElem).height(widthElem * $(".lc_box").data('aspectRatio'));
 						positionStatut = true; // On réactive le positionnement.
+				} 
+				
+				
+				
+				if(windowHeightSize<=boxHeight){ // Si la taille de l'écran est plus petit que la box - HEIGHT
+					//console.log('height touch!');
+					$(".lc_box").outerHeight(windowHeightSize);
+					$(".lc_box img").css("height","100%");
+					positionStatut = false;
 				} 
 			}
 			
